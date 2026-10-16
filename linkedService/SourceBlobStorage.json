@@ -1,0 +1,10 @@
+{
+	"name": "SourceBlobStorage",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://fashionretail.dfs.core.windows.net/"
+		}
+	}
+}
