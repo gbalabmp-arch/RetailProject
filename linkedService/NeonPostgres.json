@@ -1,0 +1,23 @@
+{
+	"name": "NeonPostgres",
+	"properties": {
+		"annotations": [],
+		"type": "PostgreSqlV2",
+		"typeProperties": {
+			"server": "ep-lucky-bread-b5ddt4w4-pooler.c-7.us-east-2.aws.neon.tech",
+			"port": 5432,
+			"database": "neondb",
+			"username": "neondb_owner",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "KeyvaultCredentials",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "NeonPostgress-password"
+			},
+			"sslMode": 2,
+			"authenticationType": "Basic"
+		}
+	}
+}
