@@ -1,0 +1,37 @@
+{
+	"name": "Ls_metadata_neon",
+	"properties": {
+		"parameters": {
+			"Neon_hostid": {
+				"type": "String",
+				"defaultValue": "ep-lucky-bread-b5ddt4w4-pooler.c-7.us-east-2.aws.neon.tech"
+			},
+			"neon_metadata": {
+				"type": "String",
+				"defaultValue": "metadata"
+			},
+			"neon_username": {
+				"type": "String",
+				"defaultValue": "neondb_owner"
+			}
+		},
+		"annotations": [],
+		"type": "PostgreSqlV2",
+		"typeProperties": {
+			"server": "@{linkedService().Neon_hostid}",
+			"port": 5432,
+			"database": "@{linkedService().neon_metadata}",
+			"username": "@{linkedService().neon_username}",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "KeyvaultCredentials",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "new-Neo-password"
+			},
+			"sslMode": 2,
+			"authenticationType": "Basic"
+		}
+	}
+}
