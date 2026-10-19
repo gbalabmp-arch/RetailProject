@@ -1,0 +1,32 @@
+{
+	"name": "Ls_Sftp_cloud",
+	"properties": {
+		"parameters": {
+			"Host_Name_Sftp_cloud": {
+				"type": "String",
+				"defaultValue": "ap-southeast-1.sftpcloud.io"
+			},
+			"Sftp_user_name": {
+				"type": "String",
+				"defaultValue": "userfile"
+			}
+		},
+		"annotations": [],
+		"type": "Sftp",
+		"typeProperties": {
+			"host": "@{linkedService().Host_Name_Sftp_cloud}",
+			"port": 22,
+			"skipHostKeyValidation": true,
+			"authenticationType": "Basic",
+			"userName": "@{linkedService().Sftp_user_name}",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "KeyvaultCredentials",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "Sftp-cloud-password"
+			}
+		}
+	}
+}
