@@ -1,6 +1,12 @@
 {
 	"name": "fashionvalueretailbgt-1",
 	"properties": {
+		"globalParameters": {
+			"Host_id_Sftp": {
+				"type": "string",
+				"value": "ap-southeast-1.sftpcloud.io"
+			}
+		},
 		"trustModeClaimForMi": {
 			"value": "Disabled",
 			"editable": true
