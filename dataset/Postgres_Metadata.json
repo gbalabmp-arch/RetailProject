@@ -1,15 +1,21 @@
 {
-	"name": "Postgres",
+	"name": "Postgres_Metadata",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Ls_metadata_neon",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"Neon_hostid": "ep-lucky-bread-b5ddt4w4-pooler.c-7.us-east-2.aws.neon.tech",
+				"neon_metadata": "metadata",
+				"neon_username": "neondb_owner"
+			}
 		},
 		"annotations": [],
 		"type": "PostgreSqlV2Table",
 		"schema": [],
 		"typeProperties": {
-			"schema": "metadta"
+			"schema": "",
+			"table": ""
 		}
 	}
 }
