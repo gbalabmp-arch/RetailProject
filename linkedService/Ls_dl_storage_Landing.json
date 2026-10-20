@@ -2,7 +2,9 @@
 	"name": "Ls_dl_storage_Landing",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
-		"annotations": [],
+		"annotations": [
+			"File_Path"
+		],
 		"type": "AzureBlobFS",
 		"typeProperties": {
 			"url": "https://dltoyretailstorage.dfs.core.windows.net/",
