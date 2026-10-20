@@ -7,14 +7,7 @@
 			"domain": "https://adb-7405619348474451.11.azuredatabricks.net",
 			"authentication": "MSI",
 			"workspaceResourceId": "/subscriptions/d487abbd-b480-4cdc-adad-7f9fbe32a020/resourceGroups/Retail_Project/providers/Microsoft.Databricks/workspaces/Retail_Project",
-			"newClusterNodeType": "Standard_DS3_v2",
-			"newClusterNumOfWorker": "1",
-			"newClusterSparkEnvVars": {
-				"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
-			},
-			"newClusterVersion": "18.2.x-scala2.13",
-			"clusterOption": "Fixed",
-			"newClusterInitScripts": []
+			"existingClusterId": "1020-181117-jcops3a3"
 		}
 	}
 }
