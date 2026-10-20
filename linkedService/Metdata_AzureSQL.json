@@ -1,0 +1,17 @@
+{
+	"name": "Metdata_AzureSQL",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "metadata-audit.database.windows.net",
+			"database": "metadata",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "metadata-audit",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEJBQjJFMERCLTEzMTYtNDhDOS1BNDgwLUUxRkRCQTM3RkMwM18yY2E0MTU5My1iM2Q5LTQ3MDAtYWUyNS02M2E3NjhjZWY5YzAiDQp9"
+		}
+	}
+}
