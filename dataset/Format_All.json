@@ -5,11 +5,20 @@
 			"referenceName": "Ls_Source_Blob_storage",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"source_type": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().source_type",
+					"type": "Expression"
+				},
 				"fileSystem": "source"
 			}
 		}
