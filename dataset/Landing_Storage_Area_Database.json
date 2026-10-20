@@ -1,0 +1,29 @@
+{
+	"name": "Landing_Storage_Area_Database",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_dl_storage_Landing",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"container_name": {
+				"type": "string"
+			},
+			"source_name": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
