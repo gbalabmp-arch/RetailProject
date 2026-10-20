@@ -47,7 +47,7 @@
 					},
 					"activities": [
 						{
-							"name": "Notebook1",
+							"name": "stg_load",
 							"type": "DatabricksNotebook",
 							"dependsOn": [],
 							"policy": {
@@ -74,11 +74,11 @@
 							}
 						},
 						{
-							"name": "Notebook1_copy1",
+							"name": "silver_load",
 							"type": "DatabricksNotebook",
 							"dependsOn": [
 								{
-									"activity": "Notebook1",
+									"activity": "stg_load",
 									"dependencyConditions": [
 										"Succeeded"
 									]
