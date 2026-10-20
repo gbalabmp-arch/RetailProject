@@ -1,0 +1,15 @@
+{
+	"name": "Postgres",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_metadata_neon",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "PostgreSqlV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "metadta"
+		}
+	}
+}
