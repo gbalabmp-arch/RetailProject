@@ -67,13 +67,24 @@
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
-									"type": "BinarySink",
+									"type": "ParquetSink",
 									"storeSettings": {
 										"type": "AzureBlobFSWriteSettings",
 										"copyBehavior": "FlattenHierarchy"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
 									}
 								},
-								"enableStaging": false
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
@@ -83,14 +94,14 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "Landing_Format_All",
+									"referenceName": "Landing_Storage_Area_Database",
 									"type": "DatasetReference",
 									"parameters": {
 										"container_name": {
 											"value": "@item().container_name",
 											"type": "Expression"
 										},
-										"Source_name": {
+										"source_name": {
 											"value": "@item().landing_path",
 											"type": "Expression"
 										},
