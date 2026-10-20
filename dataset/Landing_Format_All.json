@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"Source_Type": {
+			"Source_name": {
 				"type": "String"
 			}
 		},
