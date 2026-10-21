@@ -91,7 +91,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"source_container": "source",
-							"source_folder": "POS_XML"
+							"source_folder": "POS_XML",
+							"file_name": "ejitem"
 						}
 					}
 				],
