@@ -21,7 +21,7 @@
 						"parameters": {
 							"source_name": "source",
 							"source_folder": "POS_XML",
-							"File_name": "*"
+							"File_name": "*ejitem*"
 						}
 					},
 					"fieldList": [
