@@ -8,6 +8,12 @@
 		"parameters": {
 			"source_name": {
 				"type": "string"
+			},
+			"source_folder": {
+				"type": "String"
+			},
+			"File_name": {
+				"type": "String"
 			}
 		},
 		"annotations": [],
@@ -15,11 +21,18 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": {
-					"value": "@dataset().source_type",
+				"fileName": {
+					"value": "@dataset().File_name",
 					"type": "Expression"
 				},
-				"fileSystem": "source"
+				"folderPath": {
+					"value": "@dataset().source_folder",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().source_folder",
+					"type": "Expression"
+				}
 			}
 		}
 	}
