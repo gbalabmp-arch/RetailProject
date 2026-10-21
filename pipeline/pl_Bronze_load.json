@@ -29,7 +29,7 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEach_data_row",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -47,124 +47,309 @@
 					},
 					"activities": [
 						{
-							"name": "Copy data1",
-							"type": "Copy",
+							"name": "Switch1",
+							"type": "Switch",
 							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
 							"userProperties": [],
 							"typeProperties": {
-								"source": {
-									"type": "PostgreSqlV2Source",
-									"query": {
-										"value": "@item().source_path_or_query",
-										"type": "Expression"
-									},
-									"queryTimeout": "02:00:00"
+								"on": {
+									"value": "@item().source_system",
+									"type": "Expression"
 								},
-								"sink": {
-									"type": "ParquetSink",
-									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings",
-										"copyBehavior": "FlattenHierarchy"
+								"cases": [
+									{
+										"value": "Postgres",
+										"activities": [
+											{
+												"name": "Copy data1",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "PostgreSqlV2Source",
+														"query": {
+															"value": "@item().query",
+															"type": "Expression"
+														},
+														"queryTimeout": "02:00:00"
+													},
+													"sink": {
+														"type": "ParquetSink",
+														"storeSettings": {
+															"type": "AzureBlobFSWriteSettings",
+															"copyBehavior": "FlattenHierarchy"
+														},
+														"formatSettings": {
+															"type": "ParquetWriteSettings"
+														}
+													},
+													"enableStaging": false,
+													"translator": {
+														"type": "TabularTranslator",
+														"typeConversion": true,
+														"typeConversionSettings": {
+															"allowDataTruncation": true,
+															"treatBooleanAsNumber": false
+														}
+													}
+												},
+												"inputs": [
+													{
+														"referenceName": "Fashion_NeoPostgres",
+														"type": "DatasetReference"
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "Landing_Storage_Area_Database",
+														"type": "DatasetReference",
+														"parameters": {
+															"container_name": {
+																"value": "@item().container_name",
+																"type": "Expression"
+															},
+															"source_name": {
+																"value": "@item().landing_path",
+																"type": "Expression"
+															},
+															"file_name": {
+																"value": "@item().bronze_table_name",
+																"type": "Expression"
+															}
+														}
+													}
+												]
+											},
+											{
+												"name": "Bronze_Dataload",
+												"type": "DatabricksNotebook",
+												"dependsOn": [
+													{
+														"activity": "Copy data1",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"notebookPath": "/Users/gbalachandrabmp@gmail.com/Development/Bronze Table Loader",
+													"baseParameters": {
+														"storage_account": {
+															"value": "@item().account_name",
+															"type": "Expression"
+														},
+														"container_name": {
+															"value": "@item().container_name",
+															"type": "Expression"
+														},
+														"path_name": {
+															"value": "@item().landing_path",
+															"type": "Expression"
+														},
+														"file_name": {
+															"value": "@item().bronze_table_name",
+															"type": "Expression"
+														},
+														"file_format": {
+															"value": "@item().landing_file_format",
+															"type": "Expression"
+														},
+														"table_name": {
+															"value": "@item().bronze_table_name",
+															"type": "Expression"
+														}
+													}
+												},
+												"linkedServiceName": {
+													"referenceName": "Ls_Jobclsuter_Sytem_Manage_identiry",
+													"type": "LinkedServiceReference"
+												}
+											}
+										]
 									},
-									"formatSettings": {
-										"type": "ParquetWriteSettings"
+									{
+										"value": "Blob",
+										"activities": [
+											{
+												"name": "Blob_to_blob",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "BinarySource",
+														"storeSettings": {
+															"type": "AzureBlobFSReadSettings",
+															"recursive": true,
+															"deleteFilesAfterCompletion": false
+														},
+														"formatSettings": {
+															"type": "BinaryReadSettings"
+														}
+													},
+													"sink": {
+														"type": "ParquetSink",
+														"storeSettings": {
+															"type": "AzureBlobFSWriteSettings",
+															"copyBehavior": "FlattenHierarchy"
+														},
+														"formatSettings": {
+															"type": "ParquetWriteSettings"
+														}
+													},
+													"enableStaging": false
+												},
+												"inputs": [
+													{
+														"referenceName": "Source_retrieve_File",
+														"type": "DatasetReference",
+														"parameters": {
+															"Source_container": {
+																"value": "@item().source_container",
+																"type": "Expression"
+															},
+															"Source_folder": {
+																"value": "@item().source_path",
+																"type": "Expression"
+															},
+															"File_name": {
+																"value": "@concat('*',item().source_file_name,'*')",
+																"type": "Expression"
+															}
+														}
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "Landing_Storage_Area_Database",
+														"type": "DatasetReference",
+														"parameters": {
+															"container_name": {
+																"value": "@item().container_name",
+																"type": "Expression"
+															},
+															"source_name": {
+																"value": "@item().landing_path",
+																"type": "Expression"
+															},
+															"file_name": {
+																"value": "@item().bronze_table_name",
+																"type": "Expression"
+															}
+														}
+													}
+												]
+											},
+											{
+												"name": "Bronze_Dataload_copy1",
+												"type": "DatabricksNotebook",
+												"dependsOn": [
+													{
+														"activity": "Blob_to_blob",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"notebookPath": "/Users/gbalachandrabmp@gmail.com/Development/Bronze Table Loader",
+													"baseParameters": {
+														"storage_account": {
+															"value": "@item().account_name",
+															"type": "Expression"
+														},
+														"container_name": {
+															"value": "@item().container_name",
+															"type": "Expression"
+														},
+														"path_name": {
+															"value": "@item().landing_path",
+															"type": "Expression"
+														},
+														"file_name": {
+															"value": "@item().bronze_table_name",
+															"type": "Expression"
+														},
+														"file_format": {
+															"value": "@item().landing_file_format",
+															"type": "Expression"
+														},
+														"table_name": {
+															"value": "@item().bronze_table_name",
+															"type": "Expression"
+														}
+													}
+												},
+												"linkedServiceName": {
+													"referenceName": "Ls_Jobclsuter_Sytem_Manage_identiry",
+													"type": "LinkedServiceReference"
+												}
+											},
+											{
+												"name": "Get Metadata1",
+												"type": "GetMetadata",
+												"state": "Inactive",
+												"onInactiveMarkAs": "Succeeded",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"dataset": {
+														"referenceName": "Format_All",
+														"type": "DatasetReference"
+													},
+													"fieldList": [
+														"childItems"
+													],
+													"storeSettings": {
+														"type": "AzureBlobFSReadSettings",
+														"enablePartitionDiscovery": false
+													},
+													"formatSettings": {
+														"type": "BinaryReadSettings"
+													}
+												}
+											}
+										]
 									}
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
-							},
-							"inputs": [
-								{
-									"referenceName": "Fashion_NeoPostgres",
-									"type": "DatasetReference"
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "Landing_Storage_Area_Database",
-									"type": "DatasetReference",
-									"parameters": {
-										"container_name": {
-											"value": "@item().container_name",
-											"type": "Expression"
-										},
-										"source_name": {
-											"value": "@item().landing_path",
-											"type": "Expression"
-										},
-										"file_name": {
-											"value": "@item().bronze_table_name",
-											"type": "Expression"
-										}
-									}
-								}
-							]
-						},
-						{
-							"name": "Bronze_Dataload",
-							"type": "DatabricksNotebook",
-							"dependsOn": [
-								{
-									"activity": "Copy data1",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"notebookPath": "/Users/gbalachandrabmp@gmail.com/Development/Bronze Table Loader",
-								"baseParameters": {
-									"storage_account": {
-										"value": "@item().account_name",
-										"type": "Expression"
-									},
-									"container_name": {
-										"value": "@item().container_name",
-										"type": "Expression"
-									},
-									"path_name": {
-										"value": "@item().landing_path",
-										"type": "Expression"
-									},
-									"file_name": {
-										"value": "@item().bronze_table_name",
-										"type": "Expression"
-									},
-									"file_format": {
-										"value": "@item().landing_file_format",
-										"type": "Expression"
-									},
-									"table_name": {
-										"value": "@item().bronze_table_name",
-										"type": "Expression"
-									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "Ls_Jobclsuter_Sytem_Manage_identiry",
-								"type": "LinkedServiceReference"
+								]
 							}
 						}
 					]
