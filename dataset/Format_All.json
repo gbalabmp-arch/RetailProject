@@ -5,19 +5,13 @@
 			"referenceName": "Ls_Source_Blob_storage",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"source_name": {
-				"type": "string"
-			},
-			"source_folder": {
-				"type": "String"
-			}
-		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation"
+				"type": "AzureBlobFSLocation",
+				"folderPath": "POS_XML",
+				"fileSystem": "source"
 			}
 		}
 	}
