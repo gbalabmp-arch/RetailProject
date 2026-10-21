@@ -31,6 +31,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -73,6 +74,15 @@
 							"namespaces": true
 						}
 					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
 					"enableStaging": false
 				},
 				"inputs": [
@@ -82,6 +92,17 @@
 						"parameters": {
 							"source_container": "source",
 							"source_folder": "POS_XML"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Landing_Storage_Area_Database",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "landing",
+							"source_name": "TEST",
+							"file_name": "Test"
 						}
 					}
 				]
