@@ -1,0 +1,27 @@
+{
+	"name": "Source_retrieve_File",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_Source_Blob_storage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Source_container": {
+				"type": "string"
+			},
+			"Source_folder": {
+				"type": "string"
+			},
+			"File_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			}
+		}
+	}
+}
