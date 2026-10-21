@@ -1,0 +1,39 @@
+{
+	"name": "XML_SOURCE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_Source_Blob_storage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"source_container": {
+				"type": "string"
+			},
+			"source_folder": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().source_folder",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().source_container",
+					"type": "Expression"
+				}
+			}
+		}
+	}
+}

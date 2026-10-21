@@ -200,14 +200,16 @@
 												"userProperties": [],
 												"typeProperties": {
 													"source": {
-														"type": "BinarySource",
+														"type": "XmlSource",
 														"storeSettings": {
 															"type": "AzureBlobFSReadSettings",
 															"recursive": true,
-															"deleteFilesAfterCompletion": false
+															"enablePartitionDiscovery": false
 														},
 														"formatSettings": {
-															"type": "BinaryReadSettings"
+															"type": "XmlReadSettings",
+															"validationMode": "none",
+															"namespaces": true
 														}
 													},
 													"sink": {
@@ -224,18 +226,18 @@
 												},
 												"inputs": [
 													{
-														"referenceName": "Source_retrieve_File",
+														"referenceName": "XML_SOURCE",
 														"type": "DatasetReference",
 														"parameters": {
-															"Source_container": {
+															"source_container": {
 																"value": "@item().source_container",
 																"type": "Expression"
 															},
-															"Source_folder": {
+															"source_folder": {
 																"value": "@item().source_path",
 																"type": "Expression"
 															},
-															"File_name": {
+															"file_name": {
 																"value": "@concat('*',item().source_file_name,'*')",
 																"type": "Expression"
 															}
