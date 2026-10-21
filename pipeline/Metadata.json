@@ -19,9 +19,9 @@
 						"referenceName": "Format_All",
 						"type": "DatasetReference",
 						"parameters": {
-							"source_name": "source",
+							"source_container": "source",
 							"source_folder": "POS_XML",
-							"File_name": "*ejitem*"
+							"file_name": "*ejitem*"
 						}
 					},
 					"fieldList": [
