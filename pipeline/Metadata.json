@@ -58,8 +58,33 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "XmlSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": "source/POS_XML",
+							"wildcardFileName": "*ejitem*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "XmlReadSettings",
+							"validationMode": "none",
+							"namespaces": true
+						}
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "XML_SOURCE",
+						"type": "DatasetReference",
+						"parameters": {
+							"source_container": "source",
+							"source_folder": "POS_XML"
+						}
+					}
+				]
 			}
 		],
 		"annotations": []
