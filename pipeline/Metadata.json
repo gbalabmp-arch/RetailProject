@@ -64,7 +64,7 @@
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "source/POS_XML",
+							"wildcardFolderPath": "POS_XML",
 							"wildcardFileName": "*ejitem*",
 							"enablePartitionDiscovery": false
 						},
@@ -91,8 +91,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"source_container": "source",
-							"source_folder": "POS_XML",
-							"file_name": "ejitem"
+							"source_folder": "POS_XML"
 						}
 					}
 				],
