@@ -59,54 +59,8 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "XmlSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"wildcardFolderPath": "POS_XML",
-							"wildcardFileName": "*ejitem*",
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "XmlReadSettings",
-							"validationMode": "none",
-							"namespaces": true
-						}
-					},
-					"sink": {
-						"type": "ParquetSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings",
-							"copyBehavior": "PreserveHierarchy"
-						},
-						"formatSettings": {
-							"type": "ParquetWriteSettings"
-						}
-					},
 					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "XML_SOURCE",
-						"type": "DatasetReference",
-						"parameters": {
-							"source_container": "source",
-							"source_folder": "POS_XML"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Landing_Storage_Area_Database",
-						"type": "DatasetReference",
-						"parameters": {
-							"container_name": "landing",
-							"source_name": "TEST",
-							"file_name": "Test"
-						}
-					}
-				]
+				}
 			}
 		],
 		"annotations": []
