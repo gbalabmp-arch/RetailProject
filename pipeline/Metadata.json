@@ -95,7 +95,8 @@
 									"path": "$['data']['row'][0]['hostid']"
 								},
 								"sink": {
-									"name": "hostid"
+									"name": "hostid",
+									"type": "Guid"
 								}
 							},
 							{
@@ -103,7 +104,8 @@
 									"path": "$['data']['row'][0]['storenmbr']"
 								},
 								"sink": {
-									"name": "storenmbr"
+									"name": "storenmbr",
+									"type": "Guid"
 								}
 							},
 							{
@@ -111,7 +113,8 @@
 									"path": "$['data']['row'][0]['termnmbr']"
 								},
 								"sink": {
-									"name": "termnmbr"
+									"name": "termnmbr",
+									"type": "Guid"
 								}
 							},
 							{
@@ -119,7 +122,8 @@
 									"path": "$['data']['row'][0]['transnmbr']"
 								},
 								"sink": {
-									"name": "transnmbr"
+									"name": "transnmbr",
+									"type": "Guid"
 								}
 							},
 							{
@@ -127,7 +131,8 @@
 									"path": "$['data']['row'][0]['linenmbr']"
 								},
 								"sink": {
-									"name": "linenmbr"
+									"name": "linenmbr",
+									"type": "Guid"
 								}
 							},
 							{
@@ -135,7 +140,8 @@
 									"path": "$['data']['row'][0]['rectype']"
 								},
 								"sink": {
-									"name": "rectype"
+									"name": "rectype",
+									"type": "Guid"
 								}
 							},
 							{
@@ -143,7 +149,8 @@
 									"path": "$['data']['row'][0]['dcf']"
 								},
 								"sink": {
-									"name": "dcf"
+									"name": "dcf",
+									"type": "Guid"
 								}
 							},
 							{
@@ -151,7 +158,8 @@
 									"path": "$['data']['row'][0]['posgrpnmbr']"
 								},
 								"sink": {
-									"name": "posgrpnmbr"
+									"name": "posgrpnmbr",
+									"type": "Guid"
 								}
 							},
 							{
@@ -159,7 +167,8 @@
 									"path": "$['data']['row'][0]['functype']"
 								},
 								"sink": {
-									"name": "functype"
+									"name": "functype",
+									"type": "Guid"
 								}
 							},
 							{
@@ -167,7 +176,8 @@
 									"path": "$['data']['row'][0]['saletype']"
 								},
 								"sink": {
-									"name": "saletype"
+									"name": "saletype",
+									"type": "Guid"
 								}
 							},
 							{
@@ -175,7 +185,8 @@
 									"path": "$['data']['row'][0]['rsvdhdr']"
 								},
 								"sink": {
-									"name": "rsvdhdr"
+									"name": "rsvdhdr",
+									"type": "Guid"
 								}
 							},
 							{
@@ -327,7 +338,8 @@
 									"path": "$['data']['@type']"
 								},
 								"sink": {
-									"name": "@@type"
+									"name": "@@type",
+									"type": "Guid"
 								}
 							}
 						]
