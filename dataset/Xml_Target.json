@@ -5,34 +5,14 @@
 			"referenceName": "Ls_dl_storage_Landing",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"source_container": {
-				"type": "string"
-			},
-			"source_folder": {
-				"type": "string"
-			},
-			"file_name": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "Xml",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().file_name",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@dataset().source_folder",
-					"type": "Expression"
-				},
-				"fileSystem": {
-					"value": "@dataset().source_container",
-					"type": "Expression"
-				}
+				"fileName": "test_file",
+				"folderPath": "TEST",
+				"fileSystem": "landing"
 			}
 		}
 	}
