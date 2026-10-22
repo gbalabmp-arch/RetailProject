@@ -74,10 +74,14 @@
 						}
 					},
 					"sink": {
-						"type": "BinarySink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings",
-							"copyBehavior": "FlattenHierarchy"
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false
@@ -94,13 +98,8 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Binary_format_target",
-						"type": "DatasetReference",
-						"parameters": {
-							"target_container": "dltoyretailstorage",
-							"Target_path": "TEST",
-							"Target_file": "bala.xml"
-						}
+						"referenceName": "DelimitedText1_target",
+						"type": "DatasetReference"
 					}
 				]
 			}
