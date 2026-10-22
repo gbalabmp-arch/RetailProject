@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "bala.csv",
 				"folderPath": "TEST",
 				"fileSystem": "landing"
 			},
