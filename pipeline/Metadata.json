@@ -64,6 +64,8 @@
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": "POS_XML",
+							"wildcardFileName": "*ejitem*",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
