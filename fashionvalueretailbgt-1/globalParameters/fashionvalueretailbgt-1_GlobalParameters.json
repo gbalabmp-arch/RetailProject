@@ -1,0 +1,14 @@
+{
+	"Host_id_Sftp_Cloud": {
+		"type": "string",
+		"value": "ap-southeast-1.sftpcloud.io"
+	},
+	"username_Sftp_Cloud": {
+		"type": "string",
+		"value": "userfile"
+	},
+	"Format_Type": {
+		"type": "string",
+		"value": "Xml_Target"
+	}
+}

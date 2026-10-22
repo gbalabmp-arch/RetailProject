@@ -1,0 +1,81 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "fashionvalueretailbgt-1"
+		},
+		"LandingBlobStorage_accountKey": {
+			"value": ""
+		},
+		"Ls_Source_Blob_storage_accountKey": {
+			"value": ""
+		},
+		"Ls_dl_storage_Landing_accountKey": {
+			"value": ""
+		},
+		"Metdata_AzureSQL_password": {
+			"value": ""
+		},
+		"KeyvaultCredentials_properties_typeProperties_baseUrl": {
+			"value": "https://fashion-retail-cred.vault.azure.net/"
+		},
+		"LandingBlobStorage_properties_typeProperties_url": {
+			"value": "https://fashionretail.dfs.core.windows.net/"
+		},
+		"Ls_Jobclsuter_Sytem_Manage_identiry_properties_typeProperties_existingClusterId": {
+			"value": "1021-004527-7hjxznvf"
+		},
+		"Ls_Neon_Postgres_properties_typeProperties_server": {
+			"value": "@{linkedService().Neon_post_host_id}"
+		},
+		"Ls_Neon_Postgres_properties_typeProperties_database": {
+			"value": "@{linkedService().Neon_DB_name}"
+		},
+		"Ls_Neon_Postgres_properties_typeProperties_username": {
+			"value": "@{linkedService().Neon_postgres_username}"
+		},
+		"Ls_Sftp_cloud_properties_typeProperties_host": {
+			"value": "@{linkedService().Host_Name_Sftp_cloud}"
+		},
+		"Ls_Sftp_cloud_properties_typeProperties_userName": {
+			"value": "@{linkedService().Sftp_user_name}"
+		},
+		"Ls_Source_Blob_storage_properties_typeProperties_url": {
+			"value": "https://toyretail.dfs.core.windows.net/"
+		},
+		"Ls_dl_storage_Landing_properties_typeProperties_url": {
+			"value": "https://dltoyretailstorage.dfs.core.windows.net/"
+		},
+		"Ls_metadata_neon_properties_typeProperties_server": {
+			"value": "@{linkedService().Neon_hostid}"
+		},
+		"Ls_metadata_neon_properties_typeProperties_database": {
+			"value": "@{linkedService().neon_metadata}"
+		},
+		"Ls_metadata_neon_properties_typeProperties_username": {
+			"value": "@{linkedService().neon_username}"
+		},
+		"Metdata_AzureSQL_properties_typeProperties_server": {
+			"value": "metadata-audit.database.windows.net"
+		},
+		"Metdata_AzureSQL_properties_typeProperties_database": {
+			"value": "metadata"
+		},
+		"Metdata_AzureSQL_properties_typeProperties_userName": {
+			"value": "metadata-audit"
+		},
+		"NeonPostgres_properties_typeProperties_server": {
+			"value": "ep-lucky-bread-b5ddt4w4-pooler.c-7.us-east-2.aws.neon.tech"
+		},
+		"NeonPostgres_properties_typeProperties_database": {
+			"value": "neondb"
+		},
+		"NeonPostgres_properties_typeProperties_username": {
+			"value": "neondb_owner"
+		},
+		"SourceBlobStorage_properties_typeProperties_url": {
+			"value": "https://fashionretail.dfs.core.windows.net/"
+		}
+	}
+}

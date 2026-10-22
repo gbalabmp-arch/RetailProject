@@ -1,0 +1,626 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "fashionvalueretailbgt-1"
+		},
+		"LandingBlobStorage_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LandingBlobStorage'"
+		},
+		"Ls_Source_Blob_storage_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Ls_Source_Blob_storage'"
+		},
+		"Ls_dl_storage_Landing_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Ls_dl_storage_Landing'"
+		},
+		"Metdata_AzureSQL_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Metdata_AzureSQL'"
+		},
+		"KeyvaultCredentials_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://fashion-retail-cred.vault.azure.net/"
+		},
+		"LandingBlobStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://fashionretail.dfs.core.windows.net/"
+		},
+		"Ls_Jobclsuter_Sytem_Manage_identiry_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1021-004527-7hjxznvf"
+		},
+		"Ls_Source_Blob_storage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://toyretail.dfs.core.windows.net/"
+		},
+		"Ls_dl_storage_Landing_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://dltoyretailstorage.dfs.core.windows.net/"
+		},
+		"Metdata_AzureSQL_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "metadata-audit.database.windows.net"
+		},
+		"Metdata_AzureSQL_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "metadata"
+		},
+		"Metdata_AzureSQL_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "metadata-audit"
+		},
+		"SourceBlobStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://fashionretail.dfs.core.windows.net/"
+		},
+		"Ls_Neon_Postgres_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "@{linkedService().Neon_post_host_id}"
+		},
+		"Ls_Neon_Postgres_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "@{linkedService().Neon_DB_name}"
+		},
+		"Ls_Neon_Postgres_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "@{linkedService().Neon_postgres_username}"
+		},
+		"Ls_Sftp_cloud_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "@{linkedService().Host_Name_Sftp_cloud}"
+		},
+		"Ls_Sftp_cloud_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "@{linkedService().Sftp_user_name}"
+		},
+		"Ls_metadata_neon_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "@{linkedService().Neon_hostid}"
+		},
+		"Ls_metadata_neon_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "@{linkedService().neon_metadata}"
+		},
+		"Ls_metadata_neon_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "@{linkedService().neon_username}"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/KeyvaultCredentials')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('KeyvaultCredentials_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LandingBlobStorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('LandingBlobStorage_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('LandingBlobStorage_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ls_Jobclsuter_Sytem_Manage_identiry')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7405619348474451.11.azuredatabricks.net",
+					"authentication": "MSI",
+					"workspaceResourceId": "/subscriptions/d487abbd-b480-4cdc-adad-7f9fbe32a020/resourceGroups/Retail_Project/providers/Microsoft.Databricks/workspaces/Retail_Project",
+					"existingClusterId": "[parameters('Ls_Jobclsuter_Sytem_Manage_identiry_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ls_Source_Blob_storage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('Ls_Source_Blob_storage_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('Ls_Source_Blob_storage_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ls_dl_storage_Landing')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('Ls_dl_storage_Landing_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('Ls_dl_storage_Landing_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Metdata_AzureSQL')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('Metdata_AzureSQL_properties_typeProperties_server')]",
+					"database": "[parameters('Metdata_AzureSQL_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('Metdata_AzureSQL_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Metdata_AzureSQL_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceBlobStorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('SourceBlobStorage_properties_typeProperties_url')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SelfHosted-Localhost')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Cred_Userdefined_Access')]",
+			"type": "Microsoft.DataFactory/factories/credentials",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {
+					"resourceId": "/subscriptions/d487abbd-b480-4cdc-adad-7f9fbe32a020/resourceGroups/Retail_Project/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-adf-databricks"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/user_managed_identity')]",
+			"type": "Microsoft.DataFactory/factories/credentials",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {
+					"resourceId": "/subscriptions/d487abbd-b480-4cdc-adad-7f9fbe32a020/resourceGroups/Retail_Project/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-new-datafactory"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Metdata_AzureSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Metdata_AzureSQL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Format_All')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Ls_Source_Blob_storage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"source_container": {
+						"type": "string"
+					},
+					"source_folder": {
+						"type": "string"
+					},
+					"file_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file_name",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().source_folder",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().source_container",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Ls_Source_Blob_storage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Landing_Format_All')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Ls_dl_storage_Landing",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"container_name": {
+						"type": "String"
+					},
+					"Source_name": {
+						"type": "string"
+					},
+					"file_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [
+					"File_Path"
+				],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": {
+							"value": "@dataset().Source_name",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Ls_dl_storage_Landing')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Landing_Storage_Area_Database')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Ls_dl_storage_Landing",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"container_name": {
+						"type": "string"
+					},
+					"source_name": {
+						"type": "string"
+					},
+					"file_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file_name",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().source_name",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().container_name",
+							"type": "Expression"
+						}
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Ls_dl_storage_Landing')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Source_retrieve_File')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Ls_Source_Blob_storage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Source_container": {
+						"type": "string"
+					},
+					"Source_folder": {
+						"type": "string"
+					},
+					"File_name": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().File_name",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().Source_folder",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().Source_container",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Ls_Source_Blob_storage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/XML_SOURCE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Ls_Source_Blob_storage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"source_container": {
+						"type": "string"
+					},
+					"source_folder": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Xml",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": {
+							"value": "@dataset().source_folder",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().source_container",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Ls_Source_Blob_storage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ls_Neon_Postgres')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"Neon_post_host_id": {
+						"type": "String",
+						"defaultValue": "ep-lucky-bread-b5ddt4w4-pooler.c-7.us-east-2.aws.neon.tech"
+					},
+					"Neon_DB_name": {
+						"type": "String",
+						"defaultValue": "neondb"
+					},
+					"Neon_postgres_username": {
+						"type": "String",
+						"defaultValue": "neondb_owner"
+					}
+				},
+				"annotations": [],
+				"type": "PostgreSqlV2",
+				"typeProperties": {
+					"server": "[parameters('Ls_Neon_Postgres_properties_typeProperties_server')]",
+					"port": 5432,
+					"database": "[parameters('Ls_Neon_Postgres_properties_typeProperties_database')]",
+					"username": "[parameters('Ls_Neon_Postgres_properties_typeProperties_username')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "KeyvaultCredentials",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "new-Neo-password"
+					},
+					"sslMode": 2,
+					"authenticationType": "Basic"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/KeyvaultCredentials')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ls_Sftp_cloud')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"Host_Name_Sftp_cloud": {
+						"type": "String",
+						"defaultValue": "ap-southeast-1.sftpcloud.io"
+					},
+					"Sftp_user_name": {
+						"type": "String",
+						"defaultValue": "userfile"
+					}
+				},
+				"annotations": [],
+				"type": "Sftp",
+				"typeProperties": {
+					"host": "[parameters('Ls_Sftp_cloud_properties_typeProperties_host')]",
+					"port": 22,
+					"skipHostKeyValidation": true,
+					"authenticationType": "Basic",
+					"userName": "[parameters('Ls_Sftp_cloud_properties_typeProperties_userName')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "KeyvaultCredentials",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "Sftp-cloud-password"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/KeyvaultCredentials')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ls_metadata_neon')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"Neon_hostid": {
+						"type": "String",
+						"defaultValue": "ep-lucky-bread-b5ddt4w4-pooler.c-7.us-east-2.aws.neon.tech"
+					},
+					"neon_metadata": {
+						"type": "String",
+						"defaultValue": "metadata"
+					},
+					"neon_username": {
+						"type": "String",
+						"defaultValue": "neondb_owner"
+					}
+				},
+				"annotations": [],
+				"type": "PostgreSqlV2",
+				"typeProperties": {
+					"server": "[parameters('Ls_metadata_neon_properties_typeProperties_server')]",
+					"port": 5432,
+					"database": "[parameters('Ls_metadata_neon_properties_typeProperties_database')]",
+					"username": "[parameters('Ls_metadata_neon_properties_typeProperties_username')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "KeyvaultCredentials",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "new-Neo-password"
+					},
+					"sslMode": 2,
+					"authenticationType": "Basic"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/KeyvaultCredentials')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ls_userdefained_ADB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7405619348474451.11.azuredatabricks.net",
+					"authentication": "MSI",
+					"workspaceResourceId": "/subscriptions/d487abbd-b480-4cdc-adad-7f9fbe32a020/resourceGroups/Retail_Project/providers/Microsoft.Databricks/workspaces/Retail_Project",
+					"credential": {
+						"referenceName": "user_managed_identity",
+						"type": "CredentialReference"
+					},
+					"newClusterNodeType": "Standard_DS3_v2",
+					"newClusterNumOfWorker": "1",
+					"newClusterSparkEnvVars": {
+						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+					},
+					"newClusterVersion": "16.4.x-scala2.13",
+					"clusterOption": "Fixed",
+					"newClusterInitScripts": []
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/credentials/user_managed_identity')]"
+			]
+		}
+	]
+}
