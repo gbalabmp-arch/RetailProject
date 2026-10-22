@@ -12,7 +12,7 @@
 			},
 			"Format_Type": {
 				"type": "string",
-				"value": "parquet"
+				"value": "Xml_Target"
 			}
 		},
 		"trustModeClaimForMi": {
