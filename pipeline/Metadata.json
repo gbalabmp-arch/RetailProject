@@ -84,7 +84,252 @@
 							"fileExtension": ".txt"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['data']['row'][0]['hostid']"
+								},
+								"sink": {
+									"name": "hostid"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['storenmbr']"
+								},
+								"sink": {
+									"name": "storenmbr"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['termnmbr']"
+								},
+								"sink": {
+									"name": "termnmbr"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['transnmbr']"
+								},
+								"sink": {
+									"name": "transnmbr"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['linenmbr']"
+								},
+								"sink": {
+									"name": "linenmbr"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['rectype']"
+								},
+								"sink": {
+									"name": "rectype"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['dcf']"
+								},
+								"sink": {
+									"name": "dcf"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['posgrpnmbr']"
+								},
+								"sink": {
+									"name": "posgrpnmbr"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['functype']"
+								},
+								"sink": {
+									"name": "functype"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['saletype']"
+								},
+								"sink": {
+									"name": "saletype"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['rsvdhdr']"
+								},
+								"sink": {
+									"name": "rsvdhdr"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['datetime']"
+								},
+								"sink": {
+									"name": "datetime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['date']"
+								},
+								"sink": {
+									"name": "date"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['time']"
+								},
+								"sink": {
+									"name": "time"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['bdate']"
+								},
+								"sink": {
+									"name": "bdate"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['cshrnmbr']"
+								},
+								"sink": {
+									"name": "cshrnmbr"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['seq']"
+								},
+								"sink": {
+									"name": "seq"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['index']"
+								},
+								"sink": {
+									"name": "index"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['response0']"
+								},
+								"sink": {
+									"name": "response0"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['response1']"
+								},
+								"sink": {
+									"name": "response1"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['response2']"
+								},
+								"sink": {
+									"name": "response2"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['response3']"
+								},
+								"sink": {
+									"name": "response3"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['detype']"
+								},
+								"sink": {
+									"name": "detype"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['recordlink']"
+								},
+								"sink": {
+									"name": "recordlink"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['reserved']"
+								},
+								"sink": {
+									"name": "reserved"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['aszreason0']"
+								},
+								"sink": {
+									"name": "aszreason0"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['aszreason1']"
+								},
+								"sink": {
+									"name": "aszreason1"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['aszreason2']"
+								},
+								"sink": {
+									"name": "aszreason2"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['row'][0]['aszreason3']"
+								},
+								"sink": {
+									"name": "aszreason3"
+								}
+							},
+							{
+								"source": {
+									"path": "$['data']['@type']"
+								},
+								"sink": {
+									"name": "@@type"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
