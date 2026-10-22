@@ -42,8 +42,6 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata1",
@@ -61,8 +59,50 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "XmlSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*ejitem*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "XmlReadSettings",
+							"validationMode": "none",
+							"namespaces": true
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
+						}
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "XML_SOURCE",
+						"type": "DatasetReference",
+						"parameters": {
+							"source_container": "source",
+							"source_folder": "POS_XML"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Binary_format_target",
+						"type": "DatasetReference",
+						"parameters": {
+							"target_container": "dltoyretailstorage",
+							"Target_path": "TEST",
+							"Target_file": "bala.xml"
+						}
+					}
+				]
 			}
 		],
 		"annotations": []
