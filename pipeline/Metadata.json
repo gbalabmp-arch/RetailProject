@@ -96,7 +96,7 @@
 								},
 								"sink": {
 									"name": "hostid",
-									"type": "Guid"
+									"type": "String"
 								}
 							},
 							{
@@ -105,7 +105,7 @@
 								},
 								"sink": {
 									"name": "storenmbr",
-									"type": "Guid"
+									"type": "String"
 								}
 							},
 							{
@@ -114,7 +114,7 @@
 								},
 								"sink": {
 									"name": "termnmbr",
-									"type": "Guid"
+									"type": "Single"
 								}
 							},
 							{
@@ -123,7 +123,7 @@
 								},
 								"sink": {
 									"name": "transnmbr",
-									"type": "Guid"
+									"type": "String"
 								}
 							},
 							{
@@ -132,7 +132,7 @@
 								},
 								"sink": {
 									"name": "linenmbr",
-									"type": "Guid"
+									"type": "String"
 								}
 							},
 							{
@@ -141,7 +141,7 @@
 								},
 								"sink": {
 									"name": "rectype",
-									"type": "Guid"
+									"type": "String"
 								}
 							},
 							{
@@ -150,7 +150,7 @@
 								},
 								"sink": {
 									"name": "dcf",
-									"type": "Guid"
+									"type": "String"
 								}
 							},
 							{
@@ -159,7 +159,7 @@
 								},
 								"sink": {
 									"name": "posgrpnmbr",
-									"type": "Guid"
+									"type": "String"
 								}
 							},
 							{
@@ -168,7 +168,7 @@
 								},
 								"sink": {
 									"name": "functype",
-									"type": "Guid"
+									"type": "String"
 								}
 							},
 							{
@@ -177,7 +177,7 @@
 								},
 								"sink": {
 									"name": "saletype",
-									"type": "Guid"
+									"type": "String"
 								}
 							},
 							{
@@ -186,7 +186,7 @@
 								},
 								"sink": {
 									"name": "rsvdhdr",
-									"type": "Guid"
+									"type": "String"
 								}
 							},
 							{
