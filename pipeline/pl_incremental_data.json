@@ -321,7 +321,7 @@
 														"type": "DatasetReference",
 														"parameters": {
 															"source_container": {
-																"value": "@item().source\n",
+																"value": "@item().source_container\n",
 																"type": "Expression"
 															}
 														}
