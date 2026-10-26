@@ -240,7 +240,7 @@
 														{
 															"type": "NonQuery",
 															"text": {
-																"value": "@concat(\n    'insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time) select ''',\n    item().config_id,\n    ''',''',\n    pipeline().Pipeline,\n    ''',''',\n    variables('Activity_Name'),\n    ''',NULL,''succeded'',\n    ''',\n    activity('copy_data_from_postgres_blob').output.dataRead,\n    ''',\n    ''',\n    activity('copy_data_from_postgres_blob').output.dataWritten,\n    ''',,\n    NULL,''',\n    pipeline().TriggerTime,\n    ''',''',\n    pipeline().TriggerTime,\n    ''''\n)",
+																"value": "@concat(\n    'insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time) select ''',\n    item().config_id,\n    ''',''',\n    pipeline().Pipeline,\n    ''',''',\n    variables('Activity_Name'),\n    ''',NULL,''succeeded'',\n    ''',\n    activity('copy_data_from_postgres_blob').output.dataRead,\n    ''',\n    ''',\n    activity('copy_data_from_postgres_blob').output.dataWritten,\n    ''',,\n    NULL,''',\n    pipeline().TriggerTime,\n    ''',''',\n    pipeline().TriggerTime,\n    ''''\n)",
 																"type": "Expression"
 															}
 														}
