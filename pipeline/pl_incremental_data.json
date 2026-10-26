@@ -491,6 +491,9 @@
 		"variables": {
 			"Activity_Name": {
 				"type": "String"
+			},
+			"error_message": {
+				"type": "String"
 			}
 		},
 		"folder": {
