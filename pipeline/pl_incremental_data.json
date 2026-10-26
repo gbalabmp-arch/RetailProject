@@ -333,7 +333,7 @@
 																"type": "Expression"
 															},
 															"wildcardFileName": {
-																"value": "@concat('*',item().entity_name,'.*')",
+																"value": "@concat('*',item().entity_name,'*.xml')",
 																"type": "Expression"
 															},
 															"deleteFilesAfterCompletion": false
