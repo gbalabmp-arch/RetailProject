@@ -1,0 +1,39 @@
+{
+	"name": "DS_METADATA_BINARY_XML_COPY",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_Source_Blob_storage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"source_container": {
+				"type": "string"
+			},
+			"source_path": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().source_path",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().source_container",
+					"type": "Expression"
+				}
+			}
+		}
+	}
+}
