@@ -423,10 +423,6 @@
 														"storeSettings": {
 															"type": "SftpReadSettings",
 															"recursive": true,
-															"wildcardFileName": {
-																"value": "@item().source_file_name",
-																"type": "Expression"
-															},
 															"deleteFilesAfterCompletion": false,
 															"disableChunking": false
 														},
@@ -450,6 +446,10 @@
 														"parameters": {
 															"directory_name": {
 																"value": "@item().source_path",
+																"type": "Expression"
+															},
+															"file_name": {
+																"value": "@item().source_file_name",
 																"type": "Expression"
 															}
 														}
