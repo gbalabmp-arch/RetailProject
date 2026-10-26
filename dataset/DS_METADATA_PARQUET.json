@@ -1,0 +1,41 @@
+{
+	"name": "DS_METADATA_PARQUET",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_dl_storage_Landing",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"container_name": {
+				"type": "string"
+			},
+			"landing_path": {
+				"type": "string"
+			},
+			"bronze_table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().bronze_table_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().landing_path",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().container_name",
+					"type": "Expression"
+				}
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
