@@ -450,7 +450,7 @@
 																"type": "Expression"
 															},
 															"file_name": {
-																"value": "@item().source_file_name",
+																"value": "@concat(item().source_file_name,'.xlsx')",
 																"type": "Expression"
 															}
 														}
