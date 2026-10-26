@@ -1,0 +1,24 @@
+{
+	"name": "Metadata_Tables",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Metdata_AzureSQL",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"shema_name": {
+				"type": "string"
+			},
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "ctrl",
+			"table": "ctrl_source_to_bronze"
+		}
+	}
+}
