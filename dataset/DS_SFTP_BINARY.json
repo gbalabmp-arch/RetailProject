@@ -1,0 +1,36 @@
+{
+	"name": "DS_SFTP_BINARY",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_Sftp_cloud",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"Host_Name_Sftp_cloud": "ap-southeast-1.sftpcloud.io",
+				"Sftp_user_name": "userfile"
+			}
+		},
+		"parameters": {
+			"directory_name": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().directory_name",
+					"type": "Expression"
+				}
+			}
+		}
+	}
+}
