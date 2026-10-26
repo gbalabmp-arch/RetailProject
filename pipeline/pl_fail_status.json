@@ -27,9 +27,11 @@
 						}
 					},
 					"sink": {
-						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
+						}
 					},
 					"enableStaging": false
 				},
@@ -45,8 +47,13 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureSqlTable1",
-						"type": "DatasetReference"
+						"referenceName": "Binary_format_target",
+						"type": "DatasetReference",
+						"parameters": {
+							"target_container": "landing",
+							"Target_path": "test_xlsx",
+							"Target_file": "test"
+						}
 					}
 				]
 			}
