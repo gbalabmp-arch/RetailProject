@@ -1,0 +1,27 @@
+{
+	"name": "DS_METADATA_TARGET_EACH_FILE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_dl_storage_Landing",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"landing_container": {
+				"type": "string"
+			},
+			"landing_path": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			}
+		}
+	}
+}
