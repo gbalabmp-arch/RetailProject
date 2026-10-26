@@ -1,0 +1,35 @@
+{
+	"name": "DS_METDATA_POSTGRES_TABLE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_Neon_Postgres",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"Neon_post_host_id": "ep-lucky-bread-b5ddt4w4-pooler.c-7.us-east-2.aws.neon.tech",
+				"Neon_DB_name": "neondb",
+				"Neon_postgres_username": "neondb_owner"
+			}
+		},
+		"parameters": {
+			"schema_name": {
+				"type": "string"
+			},
+			"Table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "PostgreSqlV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema_name",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().Table_name",
+				"type": "Expression"
+			}
+		}
+	}
+}
