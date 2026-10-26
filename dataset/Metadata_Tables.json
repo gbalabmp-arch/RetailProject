@@ -7,10 +7,12 @@
 		},
 		"parameters": {
 			"shema_name": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "ctrl"
 			},
 			"table_name": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "ctrl_source_to_bronze"
 			}
 		},
 		"annotations": [],
