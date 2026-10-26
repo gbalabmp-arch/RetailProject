@@ -89,7 +89,14 @@
 											{
 												"name": "Script1",
 												"type": "Script",
-												"dependsOn": [],
+												"dependsOn": [
+													{
+														"activity": "Set variable1",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
 												"policy": {
 													"timeout": "0.12:00:00",
 													"retry": 0,
@@ -107,12 +114,26 @@
 														{
 															"type": "NonQuery",
 															"text": {
-																"value": "@concat('update ctrl.audit_source_to_bronze set status=','''in progress''',' where config_id=',item().config_id)",
+																"value": "@concat('insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time)\nselect ,',item().config_id,',',pipeline().Pipeline,',',variables('Activity_Name'),'NULL,''in progress'',NULL,NULL,NULL,',pipeline().TriggerTime,pipeline().TriggerTime)",
 																"type": "Expression"
 															}
 														}
 													],
 													"scriptBlockExecutionTimeout": "02:00:00"
+												}
+											},
+											{
+												"name": "Set variable1",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "Activity_Name",
+													"value": "copy_data_from_postgres_blob"
 												}
 											}
 										]
@@ -121,9 +142,16 @@
 										"value": "Blob",
 										"activities": [
 											{
-												"name": "Script1_copy1",
+												"name": "Script1_copy3",
 												"type": "Script",
-												"dependsOn": [],
+												"dependsOn": [
+													{
+														"activity": "Set variable1_copy1",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
 												"policy": {
 													"timeout": "0.12:00:00",
 													"retry": 0,
@@ -141,12 +169,26 @@
 														{
 															"type": "NonQuery",
 															"text": {
-																"value": "@concat('update ctrl.audit_source_to_bronze set status=','''in progress''',' where config_id=',item().config_id)",
+																"value": "@concat('insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time)\nselect ,',item().config_id,',',pipeline().Pipeline,',',variables('Activity_Name'),'NULL,''in progress'',NULL,NULL,NULL,',pipeline().TriggerTime,pipeline().TriggerTime)",
 																"type": "Expression"
 															}
 														}
 													],
 													"scriptBlockExecutionTimeout": "02:00:00"
+												}
+											},
+											{
+												"name": "Set variable1_copy1",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "Activity_Name",
+													"value": "copy_data_from_postgres_blob"
 												}
 											}
 										]
@@ -155,9 +197,16 @@
 										"value": "sftp",
 										"activities": [
 											{
-												"name": "Script1_copy2",
+												"name": "Script1_copy4",
 												"type": "Script",
-												"dependsOn": [],
+												"dependsOn": [
+													{
+														"activity": "Set variable1_copy2",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
 												"policy": {
 													"timeout": "0.12:00:00",
 													"retry": 0,
@@ -175,12 +224,26 @@
 														{
 															"type": "NonQuery",
 															"text": {
-																"value": "@concat('update ctrl.audit_source_to_bronze set status=','''in progress''',' where config_id=',item().config_id)",
+																"value": "@concat('insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time)\nselect ,',item().config_id,',',pipeline().Pipeline,',',variables('Activity_Name'),'NULL,''in progress'',NULL,NULL,NULL,',pipeline().TriggerTime,pipeline().TriggerTime)",
 																"type": "Expression"
 															}
 														}
 													],
 													"scriptBlockExecutionTimeout": "02:00:00"
+												}
+											},
+											{
+												"name": "Set variable1_copy2",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "Activity_Name",
+													"value": "copy_data_from_postgres_blob"
 												}
 											}
 										]
@@ -196,6 +259,11 @@
 			"Environment": {
 				"type": "string",
 				"defaultValue": "dev"
+			}
+		},
+		"variables": {
+			"Activity_Name": {
+				"type": "String"
 			}
 		},
 		"folder": {
