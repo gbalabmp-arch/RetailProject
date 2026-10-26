@@ -254,11 +254,11 @@
 										"value": "Blob",
 										"activities": [
 											{
-												"name": "Script1_copy3",
+												"name": "In_progres_blob_xml",
 												"type": "Script",
 												"dependsOn": [
 													{
-														"activity": "Set variable1_copy1",
+														"activity": "Blob_XML_activity_name_upd",
 														"dependencyConditions": [
 															"Succeeded"
 														]
@@ -290,7 +290,7 @@
 												}
 											},
 											{
-												"name": "Set variable1_copy1",
+												"name": "Blob_XML_activity_name_upd",
 												"type": "SetVariable",
 												"dependsOn": [],
 												"policy": {
@@ -308,7 +308,7 @@
 												"type": "ExecutePipeline",
 												"dependsOn": [
 													{
-														"activity": "Script1_copy3",
+														"activity": "In_progres_blob_xml",
 														"dependencyConditions": [
 															"Succeeded"
 														]
@@ -350,11 +350,11 @@
 										"value": "sftp",
 										"activities": [
 											{
-												"name": "Script1_copy4",
+												"name": "InProgres_smtp_copy",
 												"type": "Script",
 												"dependsOn": [
 													{
-														"activity": "Set variable1_copy2",
+														"activity": "SFTP_ACTIVITY_NAME_UPD",
 														"dependencyConditions": [
 															"Succeeded"
 														]
@@ -386,7 +386,7 @@
 												}
 											},
 											{
-												"name": "Set variable1_copy2",
+												"name": "SFTP_ACTIVITY_NAME_UPD",
 												"type": "SetVariable",
 												"dependsOn": [],
 												"policy": {
@@ -404,7 +404,7 @@
 												"type": "Copy",
 												"dependsOn": [
 													{
-														"activity": "Script1_copy4",
+														"activity": "InProgres_smtp_copy",
 														"dependencyConditions": [
 															"Succeeded"
 														]
