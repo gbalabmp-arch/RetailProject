@@ -68,7 +68,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Filter_Records_Env_Fail').output",
+						"value": "@activity('Filter_Records_Env_Fail').output.value",
 						"type": "Expression"
 					},
 					"activities": [
