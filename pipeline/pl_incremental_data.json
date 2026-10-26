@@ -114,7 +114,7 @@
 														{
 															"type": "NonQuery",
 															"text": {
-																"value": "@concat('insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time)\nselect ,',item().config_id,',',pipeline().Pipeline,',',variables('Activity_Name'),'NULL,''in progress'',NULL,NULL,NULL,',pipeline().TriggerTime,pipeline().TriggerTime)",
+																"value": "@concat('insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time)\nselect ''',item().config_id,''',''',pipeline().Pipeline,''',''',variables('Activity_Name'),''',NULL,''in progress'',NULL,NULL,NULL,''',pipeline().TriggerTime,'','',pipeline().TriggerTime,'')",
 																"type": "Expression"
 															}
 														}
@@ -169,7 +169,7 @@
 														{
 															"type": "NonQuery",
 															"text": {
-																"value": "@concat('insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time)\nselect ,',item().config_id,',',pipeline().Pipeline,',',variables('Activity_Name'),'NULL,''in progress'',NULL,NULL,NULL,',pipeline().TriggerTime,pipeline().TriggerTime)",
+																"value": "@concat('insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time)\nselect ''',item().config_id,''',''',pipeline().Pipeline,''',''',variables('Activity_Name'),''',NULL,''in progress'',NULL,NULL,NULL,''',pipeline().TriggerTime,'','',pipeline().TriggerTime,'')",
 																"type": "Expression"
 															}
 														}
@@ -224,7 +224,7 @@
 														{
 															"type": "NonQuery",
 															"text": {
-																"value": "@concat('insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time)\nselect ,',item().config_id,',',pipeline().Pipeline,',',variables('Activity_Name'),'NULL,''in progress'',NULL,NULL,NULL,',pipeline().TriggerTime,pipeline().TriggerTime)",
+																"value": "@concat('insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time)\nselect ''',item().config_id,''',''',pipeline().Pipeline,''',''',variables('Activity_Name'),''',NULL,''in progress'',NULL,NULL,NULL,''',pipeline().TriggerTime,'','',pipeline().TriggerTime,'')",
 																"type": "Expression"
 															}
 														}
