@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "metadata_infor",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select a.*,b.status from ctrl.ctrl_source_to_bronze a \nleft join (select * from ctrl.audit_source_to_bronze where start_time>(select max(start_time) from ctrl.audit_source_to_bronze where status='completed')\n) b on (a.config_id=b.config_id)\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -29,8 +30,112 @@
 					},
 					"firstRowOnly": false
 				}
+			},
+			{
+				"name": "Filter_Records_Env_Fail",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "metadata_infor",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('metadata_infor').output.value",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@and(equals(coalesce(pipeline().parameters.Environment, 'dev'), 'dev'), or(contains(createArray('Failed', 'in progress'), item().status), empty(item().status)))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Filter_Records_Env_Fail",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Filter_Records_Env_Fail').output",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Type_source",
+							"type": "Switch",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"on": {
+									"value": "@item().source_system",
+									"type": "Expression"
+								},
+								"cases": [
+									{
+										"value": "Postgres",
+										"activities": [
+											{
+												"name": "Script1",
+												"type": "Script",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"linkedServiceName": {
+													"referenceName": "Metdata_AzureSQL",
+													"type": "LinkedServiceReference"
+												},
+												"typeProperties": {
+													"scripts": [
+														{
+															"type": "NonQuery",
+															"text": {
+																"value": "@concat('update ctrl.audit_source_to_bronze set status=','''in progress''',' where config_id=',item().config_id)",
+																"type": "Expression"
+															}
+														}
+													],
+													"scriptBlockExecutionTimeout": "02:00:00"
+												}
+											}
+										]
+									},
+									{
+										"value": "Blob"
+									},
+									{
+										"value": "sftp"
+									}
+								]
+							}
+						}
+					]
+				}
 			}
 		],
+		"parameters": {
+			"Environment": {
+				"type": "string",
+				"defaultValue": "dev"
+			}
+		},
 		"folder": {
 			"name": "Metadata_Driven"
 		},
