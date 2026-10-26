@@ -517,7 +517,7 @@
 				"type": "String"
 			},
 			"error_message": {
-				"type": "String"
+				"type": "Array"
 			}
 		},
 		"folder": {
