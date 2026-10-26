@@ -343,30 +343,6 @@
 														}
 													}
 												]
-											},
-											{
-												"name": "Set variable2",
-												"type": "SetVariable",
-												"dependsOn": [
-													{
-														"activity": "copy_from_xml_blob",
-														"dependencyConditions": [
-															"Failed"
-														]
-													}
-												],
-												"policy": {
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"variableName": "error_message",
-													"value": {
-														"value": "@activity('copy_from_xml_blob').output",
-														"type": "Expression"
-													}
-												}
 											}
 										]
 									},
