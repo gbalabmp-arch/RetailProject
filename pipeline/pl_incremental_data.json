@@ -193,7 +193,21 @@
 												"outputs": [
 													{
 														"referenceName": "DS_METADATA_PARQUET",
-														"type": "DatasetReference"
+														"type": "DatasetReference",
+														"parameters": {
+															"container_name": {
+																"value": "@item().container_name",
+																"type": "Expression"
+															},
+															"landing_path": {
+																"value": "@item().landing_path",
+																"type": "Expression"
+															},
+															"bronze_table_name": {
+																"value": "@item().bronze_table_name",
+																"type": "Expression"
+															}
+														}
 													}
 												]
 											}
