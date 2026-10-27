@@ -23,12 +23,17 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "PostgreSqlV2Source",
-						"queryTimeout": "02:00:00"
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "DS_METDATA_POSTGRES",
-						"type": "DatasetReference"
+						"referenceName": "Metadata_Tables",
+						"type": "DatasetReference",
+						"parameters": {
+							"shema_name": "ctrl",
+							"table_name": "ctrl_source_to_bronze"
+						}
 					},
 					"firstRowOnly": false
 				}
