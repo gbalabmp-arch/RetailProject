@@ -857,7 +857,7 @@
 										"typeProperties": {
 											"variableName": "file_name",
 											"value": {
-												"value": "@activity('File_checking').output.itemName",
+												"value": "@concat('Fileavailability_', formatDateTime(utcNow(), 'yyyyMMdd'), '.xml')",
 												"type": "Expression"
 											}
 										}
