@@ -27,6 +27,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"Body": {
+				"type": "object"
+			}
+		},
 		"folder": {
 			"name": "Metadata_Driven"
 		},
