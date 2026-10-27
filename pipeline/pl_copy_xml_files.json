@@ -5,7 +5,14 @@
 			{
 				"name": "XML_File_List",
 				"type": "GetMetadata",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Assign_date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -34,6 +41,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -44,14 +52,9 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "XML_File_List",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
@@ -135,6 +138,61 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "Filter_ejdataent",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": []
+			},
+			{
+				"name": "Filter_ejdataent",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "XML_File_List",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('XML_File_List').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@startswith(item().name, 'ejdataent')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Assign_date",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "file_date",
+					"value": {
+						"value": "@formatDateTime(utcNow(), 'yyyyMMdd')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
@@ -149,6 +207,11 @@
 			},
 			"landing_path": {
 				"type": "string"
+			}
+		},
+		"variables": {
+			"file_date": {
+				"type": "String"
 			}
 		},
 		"folder": {
