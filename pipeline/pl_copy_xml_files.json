@@ -172,7 +172,7 @@
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@startswith(item().name, 'ejdataent')",
+						"value": "@contains(item().name, 'ejdataent')",
 						"type": "Expression"
 					}
 				}
