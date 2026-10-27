@@ -905,7 +905,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "metadata_infor_copy1",
+						"activity": "Success_Metadata_Capture",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -951,13 +951,103 @@
 				}
 			},
 			{
-				"name": "metadata_infor_copy1",
+				"name": "Success_Metadata_Capture",
 				"type": "Lookup",
 				"dependsOn": [
 					{
 						"activity": "ForEach1",
 						"dependencyConditions": [
 							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 2,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "@concat('select distinct a.*,b.status from ctrl.ctrl_source_to_bronze a \njoin (select * from ctrl.audit_source_to_bronze where pipeline_name=',pipeline().Pipeline,')\n) b on (a.config_id=b.config_id)')",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "Metadata_Tables",
+						"type": "DatasetReference",
+						"parameters": {
+							"shema_name": "ctrl",
+							"table_name": "ctrl_source_to_bronze"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Failed_Payload",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Failed_Metadata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "v_EmailPayload",
+					"value": "@concat(\n    '{\"email\":\"bmp@gmail.com\",\"cc\":\"\",\"bcc\":\"\",\"subject\":\"Pipeline Alert: ',\n    pipeline().Pipeline,\n    ' - ',\n    variables('Status'),\n    '\",\"body\":\"<h3>Pipeline Execution ',\n    variables('Status'),\n    '</h3><table border=\"1\" cellpadding=\"5\" style=\"border-collapse: collapse; font-family: Arial, sans-serif;\">',\n    '<tr style=\"background-color: #f2f2f2;\"><th>Pipeline Name</th><th>Activity Name</th><th>Status</th><th>Rows Read</th><th>Rows Written</th><th>Error Message</th><th>Start Time</th><th>End Time</th></tr>',\n    '<tr>',\n    '<td>', pipeline().Pipeline, '</td>',\n    '<td>', variables('Activity_Name'), '</td>',\n    '<td style=\"color:', if(equals(variables('Status'), 'Succeeded'), 'green', 'red'), '; font-weight:bold;\">', variables('Status'), '</td>',\n    '<td>', coalesce(variables('Row_Count_Read'), 0), '</td>',\n    '<td>', coalesce(variables('Row_Count_Written'), 0), '</td>',\n    '<td>', coalesce(variables('Error_Message'), 'None'), '</td>',\n    '<td>', pipeline().TriggerTime, '</td>',\n    '<td>', utcNow(), '</td>',\n    '</tr></table>\"}'\n)"
+				}
+			},
+			{
+				"name": "pl_send_email_copy1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Failed_Payload",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_send_email",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"Body": {
+							"value": "@variables('v_EmailPayload')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Failed_Metadata",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Failed"
 						]
 					}
 				],
