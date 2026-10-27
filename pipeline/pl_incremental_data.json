@@ -5,7 +5,14 @@
 			{
 				"name": "metadata_infor",
 				"type": "Lookup",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Until1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -240,7 +247,7 @@
 														{
 															"type": "NonQuery",
 															"text": {
-																"value": "@concat(\n    'insert into ctrl.audit_source_to_bronze(config_id,pipeline_name,activity_name,table_name,status,row_count_read,row_count_written,error_message,start_time,end_time) select ''',\n    item().config_id,\n    ''',''',\n    pipeline().Pipeline,\n    ''',''',\n    variables('Activity_Name'),\n    ''', NULL, ''succeeded'', ',\n    activity('copy_data_from_postgres_blob').output.dataRead,\n    ', ',\n    activity('copy_data_from_postgres_blob').output.dataWritten,\n    ', NULL, ''',\n    pipeline().TriggerTime,\n    ''',''',\n    pipeline().TriggerTime,\n    ''''\n)",
+																"value": "@concat(\n    'update ctrl.audit_source_to_bronze set status=''succeeded'' where config_id=''',\n    item().config_id,\n    ''' AND start_time=''',\n    pipeline().TriggerTime,\n    ''' AND status=''in progress'''\n)",
 																"type": "Expression"
 															}
 														}
@@ -342,6 +349,42 @@
 															"type": "Expression"
 														}
 													}
+												}
+											},
+											{
+												"name": "Audit_succeded_upd_blob_copy1",
+												"type": "Script",
+												"dependsOn": [
+													{
+														"activity": "pl_copy_xml_files",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"linkedServiceName": {
+													"referenceName": "Metdata_AzureSQL",
+													"type": "LinkedServiceReference"
+												},
+												"typeProperties": {
+													"scripts": [
+														{
+															"type": "NonQuery",
+															"text": {
+																"value": "@concat(\n    'update ctrl.audit_source_to_bronze set status=''succeeded'' where config_id=''',\n    item().config_id,\n    ''' AND start_time=''',\n    pipeline().TriggerTime,\n    ''' AND status=''in progress'''\n)",
+																"type": "Expression"
+															}
+														}
+													],
+													"scriptBlockExecutionTimeout": "02:00:00"
 												}
 											}
 										]
@@ -472,6 +515,42 @@
 														}
 													}
 												]
+											},
+											{
+												"name": "Audit_succeded_upd_blob_copy2",
+												"type": "Script",
+												"dependsOn": [
+													{
+														"activity": "copy_from_sftp_blob",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"linkedServiceName": {
+													"referenceName": "Metdata_AzureSQL",
+													"type": "LinkedServiceReference"
+												},
+												"typeProperties": {
+													"scripts": [
+														{
+															"type": "NonQuery",
+															"text": {
+																"value": "@concat(\n    'update ctrl.audit_source_to_bronze set status=''succeeded'' where config_id=''',\n    item().config_id,\n    ''' AND start_time=''',\n    pipeline().TriggerTime,\n    ''' AND status=''in progress'''\n)",
+																"type": "Expression"
+															}
+														}
+													],
+													"scriptBlockExecutionTimeout": "02:00:00"
+												}
 											}
 										]
 									}
@@ -479,6 +558,88 @@
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [
+					{
+						"activity": "File_checking",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('File_checking').output.exists, true)\n",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "pipelineReturnValue",
+								"value": [
+									{
+										"key": "value",
+										"value": {
+											"type": "String",
+											"content": "file is available"
+										}
+									}
+								],
+								"setSystemVariable": true
+							}
+						}
+					],
+					"timeout": "0.12:00:00"
+				}
+			},
+			{
+				"name": "File_checking",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "Source_retrieve_File",
+						"type": "DatasetReference",
+						"parameters": {
+							"Source_container": "source",
+							"Source_folder": "POS_XML",
+							"File_name": {
+								"value": "@concat('Fileavailability_', formatDateTime(utcNow(), 'yyyyMMdd'), '.xml')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"exists"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
+					}
 				}
 			}
 		],
@@ -494,6 +655,9 @@
 			},
 			"error_message": {
 				"type": "Array"
+			},
+			"file_date": {
+				"type": "String"
 			}
 		},
 		"folder": {
