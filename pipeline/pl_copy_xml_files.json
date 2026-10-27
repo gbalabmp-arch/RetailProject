@@ -50,8 +50,48 @@
 				}
 			},
 			{
-				"name": "If Condition1",
-				"type": "IfCondition",
+				"name": "Filter_ejdataent",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "XML_File_List",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('XML_File_List').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@contains(item().name, 'ejdataent')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Assign_date",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "file_date",
+					"value": {
+						"value": "@formatDateTime(utcNow(), 'yyyyMMdd')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
 				"dependsOn": [
 					{
 						"activity": "Filter_ejdataent",
@@ -62,22 +102,98 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"expression": {
-						"value": "@contains(activity('Filter_ejdataent').output.Value.name,variables('file_date'))",
+					"items": {
+						"value": "@activity('Filter_ejdataent').output.value",
 						"type": "Expression"
 					},
-					"ifTrueActivities": [
+					"activities": [
 						{
-							"name": "ForEach1",
-							"type": "ForEach",
+							"name": "If Condition1",
+							"type": "IfCondition",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"items": {
-									"value": "@activity('Filter_ejdataent').output.value",
+								"expression": {
+									"value": "@contains(activity('Filter_ejdataent').output.Value.name,variables('file_date'))",
 									"type": "Expression"
 								},
-								"activities": [
+								"ifFalseActivities": [
+									{
+										"name": "copy_from_xml_blob_copy1",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "BinarySource",
+												"storeSettings": {
+													"type": "AzureBlobFSReadSettings",
+													"recursive": true,
+													"deleteFilesAfterCompletion": false
+												},
+												"formatSettings": {
+													"type": "BinaryReadSettings"
+												}
+											},
+											"sink": {
+												"type": "BinarySink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings",
+													"copyBehavior": "FlattenHierarchy"
+												}
+											},
+											"enableStaging": false
+										},
+										"inputs": [
+											{
+												"referenceName": "DS_METADATA_BINARY_XML_COPY",
+												"type": "DatasetReference",
+												"parameters": {
+													"source_container": {
+														"value": "@pipeline().parameters.source_container",
+														"type": "Expression"
+													},
+													"source_path": {
+														"value": "@pipeline().parameters.source_path",
+														"type": "Expression"
+													},
+													"file_name": {
+														"value": "@item().name",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "DS_METADATA_TARGET_EACH_FILE",
+												"type": "DatasetReference",
+												"parameters": {
+													"landing_container": {
+														"value": "@pipeline().parameters.landing_container",
+														"type": "Expression"
+													},
+													"landing_path": {
+														"value": "@concat(pipeline().parameters.landing_path,'_rej')",
+														"type": "Expression"
+													},
+													"file_name": {
+														"value": "@item().name",
+														"type": "Expression"
+													}
+												}
+											}
+										]
+									}
+								],
+								"ifTrueActivities": [
 									{
 										"name": "copy_from_xml_blob",
 										"type": "Copy",
@@ -156,46 +272,6 @@
 							}
 						}
 					]
-				}
-			},
-			{
-				"name": "Filter_ejdataent",
-				"type": "Filter",
-				"dependsOn": [
-					{
-						"activity": "XML_File_List",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('XML_File_List').output.childItems",
-						"type": "Expression"
-					},
-					"condition": {
-						"value": "@contains(item().name, 'ejdataent')",
-						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "Assign_date",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "file_date",
-					"value": {
-						"value": "@formatDateTime(utcNow(), 'yyyyMMdd')",
-						"type": "Expression"
-					}
 				}
 			}
 		],
