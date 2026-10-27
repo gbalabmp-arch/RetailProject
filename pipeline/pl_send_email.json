@@ -1,0 +1,35 @@
+{
+	"name": "pl_send_email",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-26.southindia.logic.azure.com:443/workflows/7efb6ee5bfc2473292d488f407b8f11c/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=H1jnJcTp3kEhLjd3NAughISSf556t_TX5gOB1Eqjq3g",
+					"body": {
+						"email": "gbalachandrabmp@gmail.com",
+						"cc": "",
+						"bcc": "",
+						"subject": "Pipeline Alert: @{pipeline().Pipeline}",
+						"body": "<h3>Pipeline Execution Failed</h3><p><strong>Pipeline:</strong> @{pipeline().Pipeline}</p><table border='1' cellpadding='5' style='border-collapse: collapse;'><tr><th>Status</th><th>Time</th></tr><tr><td style='color:red;'>Failed</td><td>@{utcNow()}</td></tr></table>"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Metadata_Driven"
+		},
+		"annotations": []
+	}
+}
