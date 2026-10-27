@@ -23,18 +23,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select distinct a.*,b.status from ctrl.ctrl_source_to_bronze a \nleft join (select * from ctrl.audit_source_to_bronze where start_time>(select max(start_time) from ctrl.audit_source_to_bronze where status='completed')\n) b on (a.config_id=b.config_id)",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "PostgreSqlV2Source",
+						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "Metadata_Tables",
-						"type": "DatasetReference",
-						"parameters": {
-							"shema_name": "ctrl",
-							"table_name": "ctrl_source_to_bronze"
-						}
+						"referenceName": "DS_METDATA_POSTGRES",
+						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
@@ -809,6 +803,7 @@
 								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
