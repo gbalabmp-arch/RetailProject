@@ -780,30 +780,6 @@
 					},
 					"activities": [
 						{
-							"name": "Set variable1",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "File_checking",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "file_name",
-								"value": {
-									"value": "@activity('File_checking').output.itemName",
-									"type": "Expression"
-								}
-							}
-						},
-						{
 							"name": "File_checking",
 							"type": "GetMetadata",
 							"dependsOn": [],
@@ -829,7 +805,7 @@
 									}
 								},
 								"fieldList": [
-									"itemName"
+									"exists"
 								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
@@ -838,6 +814,55 @@
 								"formatSettings": {
 									"type": "BinaryReadSettings"
 								}
+							}
+						},
+						{
+							"name": "If Condition2",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "File_checking",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@equals(activity('File_checking').output.exists,true)",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "wait_for_seconds",
+										"type": "Wait",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"waitTimeInSeconds": 10
+										}
+									}
+								],
+								"ifTrueActivities": [
+									{
+										"name": "Set variable1",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"policy": {
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "file_name",
+											"value": {
+												"value": "@activity('File_checking').output.itemName",
+												"type": "Expression"
+											}
+										}
+									}
+								]
 							}
 						}
 					],
