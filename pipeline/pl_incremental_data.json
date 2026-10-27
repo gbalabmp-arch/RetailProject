@@ -846,7 +846,7 @@
 								],
 								"ifTrueActivities": [
 									{
-										"name": "Set variable1",
+										"name": "Assign_File_Name_Variable",
 										"type": "SetVariable",
 										"dependsOn": [],
 										"policy": {
