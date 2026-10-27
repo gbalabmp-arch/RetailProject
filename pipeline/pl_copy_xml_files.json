@@ -114,7 +114,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@contains(activity('Filter_ejdataent').output.Value.name,variables('file_date'))",
+									"value": "@contains(item().name,variables('file_date'))",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
