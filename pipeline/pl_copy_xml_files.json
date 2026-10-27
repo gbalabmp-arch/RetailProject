@@ -50,100 +50,8 @@
 				}
 			},
 			{
-				"name": "ForEach1",
-				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('XML_File_List').output.childItems",
-						"type": "Expression"
-					},
-					"activities": [
-						{
-							"name": "copy_from_xml_blob",
-							"type": "Copy",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "BinarySource",
-									"storeSettings": {
-										"type": "AzureBlobFSReadSettings",
-										"recursive": true,
-										"deleteFilesAfterCompletion": false
-									},
-									"formatSettings": {
-										"type": "BinaryReadSettings"
-									}
-								},
-								"sink": {
-									"type": "BinarySink",
-									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings",
-										"copyBehavior": "FlattenHierarchy"
-									}
-								},
-								"enableStaging": false
-							},
-							"inputs": [
-								{
-									"referenceName": "DS_METADATA_BINARY_XML_COPY",
-									"type": "DatasetReference",
-									"parameters": {
-										"source_container": {
-											"value": "@pipeline().parameters.source_container",
-											"type": "Expression"
-										},
-										"source_path": {
-											"value": "@pipeline().parameters.source_path",
-											"type": "Expression"
-										},
-										"file_name": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "DS_METADATA_TARGET_EACH_FILE",
-									"type": "DatasetReference",
-									"parameters": {
-										"landing_container": {
-											"value": "@pipeline().parameters.landing_container",
-											"type": "Expression"
-										},
-										"landing_path": {
-											"value": "@pipeline().parameters.landing_path",
-											"type": "Expression"
-										},
-										"file_name": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
-								}
-							]
-						}
-					]
-				}
-			},
-			{
 				"name": "If Condition1",
 				"type": "IfCondition",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Filter_ejdataent",
@@ -152,7 +60,103 @@
 						]
 					}
 				],
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@contains(activity('Filter_ejdataent').output.Value.name,variables('file_date'))",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "ForEach1",
+							"type": "ForEach",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"items": {
+									"value": "@activity('Filter_ejdataent').output.value",
+									"type": "Expression"
+								},
+								"activities": [
+									{
+										"name": "copy_from_xml_blob",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "BinarySource",
+												"storeSettings": {
+													"type": "AzureBlobFSReadSettings",
+													"recursive": true,
+													"deleteFilesAfterCompletion": false
+												},
+												"formatSettings": {
+													"type": "BinaryReadSettings"
+												}
+											},
+											"sink": {
+												"type": "BinarySink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings",
+													"copyBehavior": "FlattenHierarchy"
+												}
+											},
+											"enableStaging": false
+										},
+										"inputs": [
+											{
+												"referenceName": "DS_METADATA_BINARY_XML_COPY",
+												"type": "DatasetReference",
+												"parameters": {
+													"source_container": {
+														"value": "@pipeline().parameters.source_container",
+														"type": "Expression"
+													},
+													"source_path": {
+														"value": "@pipeline().parameters.source_path",
+														"type": "Expression"
+													},
+													"file_name": {
+														"value": "@item().name",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "DS_METADATA_TARGET_EACH_FILE",
+												"type": "DatasetReference",
+												"parameters": {
+													"landing_container": {
+														"value": "@pipeline().parameters.landing_container",
+														"type": "Expression"
+													},
+													"landing_path": {
+														"value": "@pipeline().parameters.landing_path",
+														"type": "Expression"
+													},
+													"file_name": {
+														"value": "@item().name",
+														"type": "Expression"
+													}
+												}
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
 			},
 			{
 				"name": "Filter_ejdataent",
