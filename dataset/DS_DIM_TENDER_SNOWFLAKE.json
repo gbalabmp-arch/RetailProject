@@ -1,0 +1,17 @@
+{
+	"name": "DS_DIM_TENDER_SNOWFLAKE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Snowflake_Db_Adf_Jobs",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "adf_data",
+			"table": "dim_tender_type"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

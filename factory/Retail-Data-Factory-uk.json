@@ -1,0 +1,15 @@
+{
+	"name": "Retail-Data-Factory-uk",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b42c1124-6eb9-451d-b9cc-4aa1eda1412f",
+		"tenantId": "d52e87c2-b723-4f4a-87bb-fae5fbd976e3"
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"name": "DS_STORE_TYPE_EXCEL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_BLOB_SOURCE",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Tender_Type_20261026.xlsx",
+				"folderPath": "EXCEL",
+				"fileSystem": "source"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,62 @@
+{
+	"name": "pl_Excel_snowflake",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_STORE_TYPE_EXCEL",
+						"type": "DatasetReference"
+					},
+					"name": "XMLFILESOURCE"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_DIM_TENDER_SNOWFLAKE",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "LS_BLOB_SOURCE",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "MapDrifted1",
+					"description": "Creates an explicit mapping for each drifted column"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false) ~> XMLFILESOURCE",
+				"XMLFILESOURCE derive(tender_key = toString(byName('tender_key')),",
+				"          tender_code = toString(byName('tender_code')),",
+				"          tender_type = toString(byName('tender_type')),",
+				"          tender_description = toString(byName('tender_description')),",
+				"          is_active = toString(byName('is_active'))) ~> MapDrifted1",
+				"MapDrifted1 derive(tender_description = regexReplace(toString(tender_description), '^[A-Z]', '')) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true) ~> sink1"
+			]
+		}
+	}
+}
