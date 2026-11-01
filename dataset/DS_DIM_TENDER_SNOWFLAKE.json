@@ -9,7 +9,7 @@
 		"type": "SnowflakeV2Table",
 		"schema": [],
 		"typeProperties": {
-			"schema": "adf_data",
+			"schema": "ADF_DATA",
 			"table": "dim_tender_type"
 		}
 	},
