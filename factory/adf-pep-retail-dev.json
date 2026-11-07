@@ -1,0 +1,15 @@
+{
+	"name": "adf-pep-retail-dev",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "bed7f48e-d65f-4862-824a-663b5e5fcb5c",
+		"tenantId": "d52e87c2-b723-4f4a-87bb-fae5fbd976e3"
+	}
+}
