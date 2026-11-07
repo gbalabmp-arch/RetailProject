@@ -1,0 +1,10 @@
+{
+	"name": "AzureKeyVault1_new",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv-pep-retail-dev.vault.azure.net/"
+		}
+	}
+}
