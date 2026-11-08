@@ -1,6 +1,10 @@
 {
 	"name": "DS_STORE_SOURCE_CSV",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_Source_Blob_storage",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
