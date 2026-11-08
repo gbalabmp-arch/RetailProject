@@ -3,11 +3,7 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Ls_Sftp_cloud",
-			"type": "LinkedServiceReference",
-			"parameters": {
-				"Host_Name_Sftp_cloud": "ap-southeast-1.sftpcloud.io",
-				"Sftp_user_name": "userfile"
-			}
+			"type": "LinkedServiceReference"
 		},
 		"parameters": {
 			"directory_name": {
