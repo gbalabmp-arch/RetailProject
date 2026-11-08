@@ -1,6 +1,10 @@
 {
 	"name": "DS_XML_EJDATAENT_SOURCE",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_Source_Blob_storage",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "Xml",
 		"typeProperties": {
