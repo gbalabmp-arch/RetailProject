@@ -5,9 +5,29 @@
 			"referenceName": "Ls_Neon_Postgres",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"Neon_post_host_id": "ep-lucky-bread-b5ddt4w4-pooler.c-7.us-east-2.aws.neon.tech",
-				"Neon_DB_name": "neondb",
-				"Neon_postgres_username": "neondb_owner"
+				"Neon_post_host_id": {
+					"value": "@dataset().Neo_host",
+					"type": "Expression"
+				},
+				"Neon_DB_name": {
+					"value": "@dataset().neo_db",
+					"type": "Expression"
+				},
+				"Neon_postgres_username": {
+					"value": "@dataset().neon_user",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"Neo_host": {
+				"type": "String"
+			},
+			"neo_db": {
+				"type": "String"
+			},
+			"neon_user": {
+				"type": "String"
 			}
 		},
 		"annotations": [],
