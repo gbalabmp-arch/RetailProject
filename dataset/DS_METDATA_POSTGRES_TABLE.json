@@ -3,32 +3,7 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Ls_Neon_Postgres",
-			"type": "LinkedServiceReference",
-			"parameters": {
-				"Neon_post_host_id": {
-					"value": "@dataset().Neo_host",
-					"type": "Expression"
-				},
-				"Neon_DB_name": {
-					"value": "@dataset().neo_db",
-					"type": "Expression"
-				},
-				"Neon_postgres_username": {
-					"value": "@dataset().neon_user",
-					"type": "Expression"
-				}
-			}
-		},
-		"parameters": {
-			"Neo_host": {
-				"type": "String"
-			},
-			"neo_db": {
-				"type": "String"
-			},
-			"neon_user": {
-				"type": "String"
-			}
+			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "PostgreSqlV2Table",
