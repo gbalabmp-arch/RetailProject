@@ -1,27 +1,13 @@
 {
 	"name": "Ls_Neon_Postgres",
 	"properties": {
-		"parameters": {
-			"Neon_post_host_id": {
-				"type": "String",
-				"defaultValue": "ep-proud-boat-bdemboft-pooler.c-8.us-east-2.aws.neon.tech"
-			},
-			"Neon_DB_name": {
-				"type": "String",
-				"defaultValue": "neondb"
-			},
-			"Neon_postgres_username": {
-				"type": "String",
-				"defaultValue": "neondb_owner"
-			}
-		},
 		"annotations": [],
 		"type": "PostgreSqlV2",
 		"typeProperties": {
-			"server": "@{linkedService().Neon_post_host_id}",
+			"server": "ep-proud-boat-bdemboft-pooler.c-8.us-east-2.aws.neon.tech",
 			"port": 5432,
-			"database": "@{linkedService().Neon_DB_name}",
-			"username": "@{linkedService().Neon_postgres_username}",
+			"database": "neondb",
+			"username": "neondb_owner",
 			"password": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
