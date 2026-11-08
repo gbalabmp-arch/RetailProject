@@ -5,9 +5,18 @@
 			"referenceName": "Ls_Source_Blob_storage",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"excel": {
+				"type": "String"
+			}
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": {
+				"value": "@dataset().excel",
+				"type": "Expression"
+			},
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "Tender_Type_20261026.xlsx",
