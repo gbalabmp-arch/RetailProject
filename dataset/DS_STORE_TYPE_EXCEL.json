@@ -1,10 +1,13 @@
 {
 	"name": "DS_STORE_TYPE_EXCEL",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_Source_Blob_storage",
+			"type": "LinkedServiceReference"
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "Tender_Type_20261026.xlsx",
