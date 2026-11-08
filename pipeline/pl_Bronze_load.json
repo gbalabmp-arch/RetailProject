@@ -175,10 +175,6 @@
 															"type": "Expression"
 														}
 													}
-												},
-												"linkedServiceName": {
-													"referenceName": "Ls_Jobclsuter_Sytem_Manage_identiry",
-													"type": "LinkedServiceReference"
 												}
 											}
 										]
@@ -316,10 +312,6 @@
 															"type": "Expression"
 														}
 													}
-												},
-												"linkedServiceName": {
-													"referenceName": "Ls_Jobclsuter_Sytem_Manage_identiry",
-													"type": "LinkedServiceReference"
 												}
 											},
 											{

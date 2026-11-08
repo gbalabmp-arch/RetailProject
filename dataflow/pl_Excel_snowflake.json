@@ -18,11 +18,7 @@
 						"referenceName": "DS_DIM_TENDER_SNOWFLAKE",
 						"type": "DatasetReference"
 					},
-					"name": "sink1",
-					"rejectedDataLinkedService": {
-						"referenceName": "LS_BLOB_SOURCE",
-						"type": "LinkedServiceReference"
-					}
+					"name": "sink1"
 				}
 			],
 			"transformations": [

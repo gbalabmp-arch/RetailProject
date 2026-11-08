@@ -1,10 +1,6 @@
 {
 	"name": "DS_STORE_TYPE_EXCEL",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "LS_BLOB_SOURCE",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {

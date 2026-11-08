@@ -67,10 +67,6 @@
 									},
 									"timeout_seconds": "3600"
 								}
-							},
-							"linkedServiceName": {
-								"referenceName": "Ls_Jobclsuter_Sytem_Manage_identiry",
-								"type": "LinkedServiceReference"
 							}
 						},
 						{
@@ -101,10 +97,6 @@
 									},
 									"timeout_seconds": "3600"
 								}
-							},
-							"linkedServiceName": {
-								"referenceName": "Ls_Jobclsuter_Sytem_Manage_identiry",
-								"type": "LinkedServiceReference"
 							}
 						}
 					]
