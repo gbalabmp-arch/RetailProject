@@ -224,7 +224,7 @@
 												"type": "Script",
 												"dependsOn": [
 													{
-														"activity": "copy_data_from_postgres_blob",
+														"activity": "Notebook1",
 														"dependencyConditions": [
 															"Succeeded"
 														]
@@ -324,6 +324,43 @@
 												"typeProperties": {
 													"message": "Inside copy from stg Failed",
 													"errorCode": "201"
+												}
+											},
+											{
+												"name": "Notebook1",
+												"type": "DatabricksNotebook",
+												"dependsOn": [
+													{
+														"activity": "copy_data_from_postgres_blob",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"notebookPath": "/Repos/Databricks_Retail/Bronze/Landing_Bronze_Table",
+													"baseParameters": {
+														"format": {
+															"value": "parquet",
+															"type": "Expression"
+														},
+														"file_path": {
+															"value": "@concat(item().container_name,'/',item().landing_path,item().bronze_table_name)",
+															"type": "Expression"
+														}
+													}
+												},
+												"linkedServiceName": {
+													"referenceName": "Ls_Azure_Databricks",
+													"type": "LinkedServiceReference"
 												}
 											}
 										]
