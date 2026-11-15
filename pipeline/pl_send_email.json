@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "POST",
-					"url": "https://prod-31.centralindia.logic.azure.com:443/workflows/653b185d996b496190e8354b0a9d8a7f",
+					"url": "https://prod-31.centralindia.logic.azure.com:443/workflows/653b185d996b496190e8354b0a9d8a7f/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=z2vUUVS3QH6kWHPVvHMbIXrGxq3wngX5BOgz8kQ8Z7E",
 					"body": {
 						"email": "gbalachandrabmp@gmail.com",
 						"cc": "",
