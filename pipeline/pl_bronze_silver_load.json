@@ -1,0 +1,39 @@
+{
+	"name": "pl_bronze_silver_load",
+	"properties": {
+		"activities": [
+			{
+				"name": "Notebook1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/Databricks_Retail/Bronze/Landing_Bronze_Table",
+					"baseParameters": {
+						"format": "parquet",
+						"header": "\"\"",
+						"xml_tag": "\"\"",
+						"file_path": "\"\"",
+						"multi_line": "\"\"",
+						"bronze_table": "\"\""
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "Ls_Azure_Databricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Metadata_Driven"
+		},
+		"annotations": []
+	}
+}
