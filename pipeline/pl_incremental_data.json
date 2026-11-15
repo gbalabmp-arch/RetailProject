@@ -352,10 +352,14 @@
 															"value": "parquet",
 															"type": "Expression"
 														},
+														"header": "\"\"",
+														"xml_tag": "\"\"",
 														"file_path": {
 															"value": "@concat(item().container_name,'/',item().landing_path,item().bronze_table_name)",
 															"type": "Expression"
-														}
+														},
+														"multi_line": "\"\"",
+														"bronze_table": "\"\""
 													}
 												},
 												"linkedServiceName": {
